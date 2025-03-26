@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Exam Performance Indicator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container-wrapper {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            max-width: 1000px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        .illustration-section {
+            background: linear-gradient(150deg, #4f46e5, #8b5cf6);
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .illustration {
+            width: 100%;
+            max-width: 300px;
+        }
+        .form-section {
+            padding: 40px;
+        }
+        h1 {
+            color: #1a237e;
+            font-weight: 700;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+        .form-control {
+            border-radius: 10px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.25);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 8px;
+        }
+        .btn-primary {
+            background: #4f46e5;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+        .result-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .form-icon {
+            color: #4f46e5;
+            margin-right: 10px;
+        }
+        @media (max-width: 768px) {
+            .container-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .illustration-section {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="illustration-section">
+            <img src="https://img.freepik.com/free-vector/exams-concept-illustration_114360-2754.jpg?w=826&t=st=1712146961~exp=1712147561~hmac=3a5e6c8a9dcc0a5d5e4a3c0e5a4d4e4a3c0e5a4d4e4a3c0e5a4d4e4a3c0e5a4d4" alt="Education Illustration" class="illustration">
+        </div>
+        <div class="form-section">
+            <h1>📚 Student Exam Performance Predictor</h1>
+            <form action="{{ url_for('predict_datapoint') }}" method="post">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-venus-mars form-icon"></i>Gender</label>
+                            <select class="form-select" name="gender" required>
+                                <option selected disabled value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-users form-icon"></i>Ethnicity</label>
+                            <select class="form-select" name="ethnicity" required>
+                                <option selected disabled value="">Select Ethnic Group</option>
+                                <option value="group A">Group A</option>
+                                <option value="group B">Group B</option>
+                                <option value="group C">Group C</option>
+                                <option value="group D">Group D</option>
+                                <option value="group E">Group E</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-graduation-cap form-icon"></i>Parent Education</label>
+                            <select class="form-select" name="parental_level_of_education" required>
+                                <option selected disabled value="">Select Education Level</option>
+                                <option value="associate's degree">Associate's Degree</option>
+                                <option value="bachelor's degree">Bachelor's Degree</option>
+                                <option value="high school">High School</option>
+                                <option value="master's degree">Master's Degree</option>
+                                <option value="some college">Some College</option>
+                                <option value="some high school">Some High School</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-utensils form-icon"></i>Lunch Type</label>
+                            <select class="form-select" name="lunch" required>
+                                <option selected disabled value="">Select Lunch Type</option>
+                                <option value="free/reduced">Free/Reduced</option>
+                                <option value="standard">Standard</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-book-open form-icon"></i>Test Preparation</label>
+                            <select class="form-select" name="test_preparation_course" required>
+                                <option selected disabled value="">Select Course Status</option>
+                                <option value="none">None</option>
+                                <option value="completed">Completed</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-book-reader form-icon"></i>Reading Score</label>
+                            <input class="form-control" type="number" name="reading_score" placeholder="0-100" min="0" max="100" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label"><i class="fas fa-edit form-icon"></i>Writing Score</label>
+                            <input class="form-control" type="number" name="writing_score" placeholder="0-100" min="0" max="100" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-grid mt-4">
+                    <button class="btn btn-primary btn-lg" type="submit">
+                        <i class="fas fa-calculator"></i> Predict Math Score
+                    </button>
+                </div>
+            </form>
+            
+            {% if results %}
+            <div class="result-card mt-4">
+                <div class="h4 mb-2">📈 Predicted Math Score</div>
+                <div class="h3 text-primary">{{ results }}</div>
+                <small class="text-muted">Based on machine learning model analysis</small>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
